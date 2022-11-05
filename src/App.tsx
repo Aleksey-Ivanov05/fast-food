@@ -3,7 +3,7 @@ import foodImage from './assets/foodImage.png';
 import hotDrinkImage from './assets/hotDrinkImage.png';
 import coldDrinkImage from './assets/coldDrinkImage.png';
 import Item from "./components/Item/Item";
-import OrderItem from "./components/OrderItem/OrderItem";
+import OrderItems from "./components/OrderItems/OrderItems";
 
 function App() {
   const [items, setItems] = useState([
@@ -33,29 +33,10 @@ function App() {
     }))
   }
 
-  let empty = '';
-  const orderItems = items.filter(item => item.count > 0);
-  if (orderItems.length === 0) {
-    empty = 'Order is empty! Please add some items!'
-  }
-
-  const totalPrice = orderItems.reduce((acc, item) => {
-    return acc + item.count*item.price;
-  }, 0);
-
   return (
     <div className="container">
       <div className="row mt-3 justify-content-between">
-        <div className="col-4 border border-2 border-dark px-4">
-          <p><b>Order list</b></p>
-          {empty}
-          <div>
-            {orderItems.map(item => (
-              <OrderItem key={item.id} name={item.name} count={item.count} price={item.price} onButtonClick={() => onDelete(item.id)}/>
-            ))}
-            <p><strong>Total price: {totalPrice} KGZ</strong></p>
-          </div>
-        </div>
+        <OrderItems items={items} onDelete={onDelete}/>
         <div className="col-7 border border-2 border-dark row p-5">
           {items.map(item => (
             <Item key={item.id} image={item.image} name={item.name} price={item.price} onItemClick={() => addNewOrderItem(item.id)}/>
